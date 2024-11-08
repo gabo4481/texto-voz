@@ -1,5 +1,6 @@
 import dearpygui.dearpygui as dpg
 import pyttsx3
+import time
 
 # Inicialización de pyttsx3
 engine = pyttsx3.init()
@@ -34,13 +35,20 @@ def texto_voz():
         engine.setProperty('volume', volumen)
         engine.setProperty('voice', voices[voz_index].id)  
         
+        star_time = time.time()
+        
         # Guardar en archivo y reproducir
         engine.save_to_file(contenido, "output_file.mp3")
         engine.runAndWait()
         
+        end_time = time.time()
+        
+        time_conversion = round(end_time - star_time,2)
+        
         # Mostrar popup de éxito
-        dpg.set_value("texto_popup", "Conversion realizada con exito")
+        dpg.set_value("texto_popup", f"Conversion realizada con exito. Tardo {time_conversion} segundos")
         dpg.configure_item("popup_id", show=True)
+        dpg.set_value("Tiempo_conversion",f"{time_conversion} segundos")
     else:
         dpg.set_value("texto_popup", "Por favor carga un archivo de texto y elige una voz.")
         dpg.configure_item("popup_id", show=True)
@@ -97,6 +105,10 @@ with dpg.window(label="Convertir Texto a Voz",tag="principal", width=800, height
         with dpg.group( horizontal=True):
             dpg.add_text("Cantidad De Palabras:")
             dpg.add_text(label="cantidad_palabras",tag="cantidad_palabras",default_value=0)
+        with dpg.group( horizontal=True):
+            dpg.add_text("Tiempo de conversion:")
+            dpg.add_text(label="Tiempo de conversion:",tag="Tiempo_conversion",default_value=0)
+        
 
     dpg.add_separator(label="Acciones")
     with dpg.group(tag="Acciones",horizontal=True,horizontal_spacing=40,width=200,height=40,indent=50):
@@ -130,9 +142,9 @@ with dpg.window(label="Convertir Texto a Voz",tag="principal", width=800, height
                             dpg.add_theme_style(dpg.mvStyleVar_ItemSpacing, 8, 8)  # gap
                             dpg.add_theme_style(dpg.mvStyleVar_ButtonTextAlign, 0.5, 0.5)  # text-align
                         
-        dpg.add_button(label="Convertir", callback=texto_voz)
+        dpg.add_button(label="Convertir Texto", callback=texto_voz)
         dpg.bind_item_theme(dpg.last_item(), "tema_boton_convertir")
-        dpg.add_button(label="Probar Voz", callback=prueba_voz)
+        dpg.add_button(label="Escuchar Texto", callback=prueba_voz)
         dpg.bind_item_theme(dpg.last_item(), "tema_boton_prueba")
         dpg.add_button(label="Cargar texto", callback=lambda: dpg.show_item("cargar_texto_id"))
         dpg.bind_item_theme(dpg.last_item(), "tema_boton_cargar")
