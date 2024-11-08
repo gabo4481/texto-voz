@@ -5,10 +5,11 @@ Este proyecto es una aplicación gráfica en Python que permite cargar un archiv
 
 ## Características
 
-- Cargar y visualizar el contenido de archivos de texto.
+- Cargar y visualizar el contenido de archivos de texto `.txt`.
 - Seleccionar una voz, ajustar la velocidad y el volumen de la conversión.
 - Convertir texto a voz y guardarlo como archivo `.mp3`.
 - Probar la voz seleccionada antes de realizar la conversión final.
+- Mostrar cantidad de letras y caracteres.
 
 ## Requisitos
 
@@ -24,6 +25,7 @@ Este proyecto es una aplicación gráfica en Python que permite cargar un archiv
     ```bash
     pip install dearpygui pyttsx3
     ```
+3. (Alternativa opcional) tambien puedes instalar los archivo `.whl`.
 
 ## Uso
 
